@@ -8,6 +8,13 @@ resource "aws_instance" "proxy" {
   tags = {
     Name = "proxy"
   }
+  user_data = <<-EOF
+    sudo sed -i -r 's/^#?GatewayPorts .*$/GatewayPorts yes/g' /etc/ssh/sshd_config
+    sudo sed -i -r 's/^#?ClientAliveCountMax .*$/ClientAliveCountMax 99999/g' /etc/ssh/sshd_config
+    sudo sed -i -r 's/^#?ClientAliveInterval .*$/ClientAliveInterval 30/g' /etc/ssh/sshd_config
+    sudo sed -i -r 's/^#?AllowTcpForwarding .*$/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
+    sudo service sshd restart
+    EOF
 }
 
 resource "aws_security_group" "proxy_sg" {
