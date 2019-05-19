@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -x
 
 echo "Which of your Raspberry Pis do you want to connect to?"
 echo "0 pi0"
