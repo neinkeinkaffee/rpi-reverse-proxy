@@ -10,4 +10,4 @@ read PI
 EC2_PUBLIC_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=proxy" \
 --query "Reservations[].Instances[].NetworkInterfaces[].Association.PublicIp" \
 --no-paginate | jq -r '.[0]')
-ssh pi@${EC2_PUBLIC_IP} -p 1${PI}${PI}11
+ssh -t -i /Users/gstupper/.ssh/aws-free-tier -p 2222 ec2-user@${EC2_PUBLIC_IP} ssh -p 1${PI}${PI}11 pi@localhost
