@@ -8,13 +8,12 @@ resource "aws_instance" "proxy" {
   tags = {
     Name = "proxy"
   }
-  user_data = <<-EOF
-    sudo sed -i -r 's/^#?GatewayPorts .*$/GatewayPorts yes/g' /etc/ssh/sshd_config
-    sudo sed -i -r 's/^#?ClientAliveCountMax .*$/ClientAliveCountMax 99999/g' /etc/ssh/sshd_config
-    sudo sed -i -r 's/^#?ClientAliveInterval .*$/ClientAliveInterval 30/g' /etc/ssh/sshd_config
-    sudo sed -i -r 's/^#?AllowTcpForwarding .*$/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
-    sudo service sshd restart
-    EOF
+}
+
+resource "aws_eip" "proxy_eip" {
+  instance = "${aws_instance.proxy.id}"
+  vpc      = true
+  depends_on = ["aws_internet_gateway.internet_gateway"]
 }
 
 resource "aws_security_group" "proxy_sg" {
@@ -24,20 +23,6 @@ resource "aws_security_group" "proxy_sg" {
     from_port = 8
     to_port = 0
     protocol = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 2222
-    to_port = 2222
-    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
