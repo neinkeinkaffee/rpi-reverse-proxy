@@ -62,3 +62,9 @@ docker run -d \
     --volume /home/pi/tinc-pi:/etc/tinc \
     jordancrawford/rpi-tinc
 ```
+
+Build and start a dockerized nginx on EC2 that proxies requests against the Raspberry pi server or servers.
+```
+docker build . -t proxy
+docker run -d --name proxy --publish 443:443 proxy
+```
