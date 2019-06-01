@@ -1,0 +1,13 @@
+nginx:
+  image: bringnow/nginx-letsencrypt
+  volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    - ./letsencryptauth.conf:/etc/nginx/snippets/letsencryptauth.conf
+    - ./sslconfig.conf:/etc/nginx/snippets/sslconfig.conf
+    - /etc/letsencrypt:/etc/letsencrypt
+    - /var/acme-webroot:/var/acme-webroot
+    - /srv/docker/nginx/dhparam:/etc/nginx/dhparam
+  ports:
+    - "80:80"
+    - "443:443"
+  net: "host"
