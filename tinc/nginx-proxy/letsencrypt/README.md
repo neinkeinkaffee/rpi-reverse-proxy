@@ -18,3 +18,5 @@ letsencrypt-manager add some-domain-name.de www.some-domain-name.de [and maybe m
 ```
 
 Note that port 80 must be open to the world for the challenge to complete succesfully (because Let's Encrypt doesn't have fixed IPs that we could whitelist).
+
+If LE_EMAIL is set in a file called .env, letsencrypt-manager will not ask for it interactively when requesting a certificate.
