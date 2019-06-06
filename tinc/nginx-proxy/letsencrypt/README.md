@@ -17,6 +17,8 @@ docker-compose up -d # specify path of docker-compose.yml with -f if not inside 
 letsencrypt-manager add some-domain-name.de www.some-domain-name.de [and maybe more alternative domain names]...
 ```
 
-Note that port 80 must be open to the world for the challenge to complete succesfully (because Let's Encrypt doesn't have fixed IPs that we could whitelist).
+Note that for the challenge to complete successfully 
+ * Port 80 on the machine must be open to the world (Let's Encrypt doesn't have fixed IPs that we could whitelist).
+ * You must create DNS entries for DOMAIN_NAME www.DOMAIN_NAME, e.g. an A Record for DOMAIN_NAME pointing to your IP and a CNAME for www.DOMAIN_NAME pointing to DOMAIN_NAME.
 
-If LE_EMAIL is set in a file called .env, letsencrypt-manager will not ask for it interactively when requesting a certificate.
+Unless LE_EMAIL is set in a file called .env, letsencrypt-manager will ask for it interactively when requesting a certificate.
