@@ -17,18 +17,18 @@ done
 # Find currently allowed IP ranges (variable interpolation in jq isn't working as documented)
 CIDRS=$(aws ec2 describe-security-groups --group-ids $SG \
     | jq -r '.SecurityGroups[].IpPermissions[]
-    | select(.FromPort == 2222 and .ToPort == 2222) | .IpRanges[].CidrIp')
+    | select(.FromPort == 22 and .ToPort == 22) | .IpRanges[].CidrIp')
 
 # Revoke access for currently allowed IP ranges
 for ip in $CIDRS; do
 	[ "$MYIP/32" != "$ip" ] && aws ec2 revoke-security-group-ingress \
-		--group-id $SG --protocol tcp --port 2222 --cidr $ip
+		--group-id $SG --protocol tcp --port 22 --cidr $ip
 	[ "$MYIP/32" != "$ip" ] && aws ec2 revoke-security-group-ingress \
 		--group-id $SG --protocol tcp --port 443 --cidr $ip
 done
 
 # Allow access for IP of this machine
 [ -z $(echo "$CIDRS" | grep "$MYIP/32") ] && aws ec2 authorize-security-group-ingress \
-    --group-id $SG --protocol tcp --port 2222 --cidr "$MYIP/32"
+    --group-id $SG --protocol tcp --port 22 --cidr "$MYIP/32"
 [ -z $(echo "$CIDRS" | grep "$MYIP/32") ] && aws ec2 authorize-security-group-ingress \
     --group-id $SG --protocol tcp --port 443 --cidr "$MYIP/32"
