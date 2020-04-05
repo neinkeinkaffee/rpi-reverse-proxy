@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 brew install tinc || sudo apt-get install -y tinc
 sudo mkdir -p /etc/tinc/rpinet/hosts

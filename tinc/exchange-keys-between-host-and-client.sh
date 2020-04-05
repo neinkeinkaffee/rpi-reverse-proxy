@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 ssh pi@$NODE_IP sudo apt-get install -y tinc
 ssh pi@$NODE_IP tincd -n rpinet -K4096

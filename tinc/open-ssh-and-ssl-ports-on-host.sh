@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 
 # Credits go to https://advancedweb.hu/2019/04/02/sg_allow_ip/
 
