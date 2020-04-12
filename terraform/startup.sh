@@ -6,7 +6,7 @@ sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y universe
 sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get update
-sudo apt-get install certbot python-certbot-nginx
+sudo apt-get install -y certbot python-certbot-nginx
 
 # Install and configure tinc
 sudo apt-get install -y tinc
