@@ -1,13 +1,14 @@
 nginx:
   image: bringnow/nginx-letsencrypt
+  environment:
+    DOMAIN: $DOMAIN
   volumes:
-    - ./nginx.conf:/etc/nginx/nginx.conf
-    - ./letsencryptauth.conf:/etc/nginx/snippets/letsencryptauth.conf
-    - ./sslconfig.conf:/etc/nginx/snippets/sslconfig.conf
+    - ./nginx.conf.template:/etc/nginx/nginx.conf.template
     - /etc/letsencrypt:/etc/letsencrypt
     - /var/acme-webroot:/var/acme-webroot
     - /srv/docker/nginx/dhparam:/etc/nginx/dhparam
   ports:
     - "80:80"
     - "443:443"
+  entrypoint: sh -c "envsubst '$$DOMAIN' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
   net: "host"

@@ -1,0 +1,3 @@
+nginx:
+  volumes:
+    - ./nginx.no-cert.conf.template:/etc/nginx/nginx.conf.template
