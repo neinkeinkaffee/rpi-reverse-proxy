@@ -1,11 +1,12 @@
 #! /bin/bash
 
-# Smoke test
+# Install certbot
 sudo apt-get update
-sudo apt-get install -y apache2
-sudo systemctl start apache2
-sudo systemctl enable apache2
-echo "<h1>Hello from the rpinet remote host</h1>" | sudo tee /var/www/html/index.html
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y universe
+sudo add-apt-repository -y ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python-certbot-nginx
 
 # Install and configure tinc
 sudo apt-get install -y tinc
