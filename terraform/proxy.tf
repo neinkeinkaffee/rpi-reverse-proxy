@@ -8,7 +8,7 @@ resource "aws_instance" "proxy" {
   subnet_id                   = aws_subnet.public_subnet_1.id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.proxy_key_pair.key_name
-  user_data                   = file("install-tinc-on-host.sh")
+  user_data                   = file("startup.sh")
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.proxy_sg.id]
   tags = {
