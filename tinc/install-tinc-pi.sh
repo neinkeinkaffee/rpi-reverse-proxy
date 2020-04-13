@@ -21,6 +21,7 @@ sudo chmod 755 /etc/tinc/rpinet/tinc-*
 tincd -n rpinet -K4096
 sudo systemctl enable tinc@rpinet
 sudo systemctl start tinc@rpinet
+(crontab -l 2>/dev/null; echo "@reboot $(which systemctl) start tinc@rpinet") | crontab -
 cat << 'EOF' > open-vpn-port.sh
 #!/usr/bin/env bash
 set -ex
@@ -58,3 +59,5 @@ done
     --group-id $SG --protocol udp --port 655 --cidr "$MYIP/32"
 EOF
 chmod +x open-vpn-port.sh
+(crontab -l 2>/dev/null; echo "0 4-7 * * * $(which sh) open-vpn-port.sh") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot $(which sh) open-vpn-port.sh") | crontab -
