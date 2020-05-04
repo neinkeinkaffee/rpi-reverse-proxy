@@ -8,6 +8,13 @@ sudo mkdir -p /home/ubuntu/.secrets/certbot
 echo "dns_cloudflare_api_token = ${CLOUDFLARE_API_TOKEN}" >> /home/ubuntu/.secrets/certbot/cloudflare.ini
 sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu/.secrets/certbot/cloudflare.ini --non-interactive --agree-tos -d ${DOMAIN} -m ${EMAIL}
 
+# Run nginx in docker with docker-compose
+sudo apt-get install -y docker-compose
+sudo chown $USER:docker /var/run/docker.sock
+wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
+wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
+DOMAIN=${DOMAIN} docker-compose up -d
+
 # Install and configure tinc
 sudo apt-get install -y tinc
 sudo mkdir -p /etc/tinc/rpinet/hosts
@@ -20,10 +27,3 @@ echo -e '#!/bin/sh\nifconfig $INTERFACE down' | sudo tee /etc/tinc/rpinet/tinc-d
 sudo chmod 755 /etc/tinc/rpinet/tinc-*
 sudo tincd -n rpinet -D --debug=5
 (crontab -l 2>/dev/null; echo "@reboot $(which tincd) -n rpinet -D --debug=5") | crontab -
-
-# Run nginx in docker with docker-compose
-sudo apt-get install -y docker-compose
-sudo chown $USER:docker /var/run/docker.sock
-wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
-wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
-DOMAIN=${DOMAIN} docker-compose up -d
