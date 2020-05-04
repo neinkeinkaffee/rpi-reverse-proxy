@@ -1,5 +1,4 @@
 keyfile = ""
 domain = ""
 email = ""
-cloudflare_api_key = ""
-cloudflare_email = ""
+cloudflare_api_token = ""
