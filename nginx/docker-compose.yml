@@ -1,12 +1,10 @@
 nginx:
-  image: bringnow/nginx-letsencrypt
+  image: nginx
   environment:
     DOMAIN: $DOMAIN
   volumes:
     - ./nginx.conf.template:/etc/nginx/nginx.conf.template
     - /etc/letsencrypt:/etc/letsencrypt
-    - /var/acme-webroot:/var/acme-webroot
-    - /srv/docker/nginx/dhparam:/etc/nginx/dhparam
   ports:
     - "80:80"
     - "443:443"

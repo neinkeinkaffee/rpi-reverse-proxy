@@ -20,3 +20,10 @@ echo -e '#!/bin/sh\nifconfig $INTERFACE down' | sudo tee /etc/tinc/rpinet/tinc-d
 sudo chmod 755 /etc/tinc/rpinet/tinc-*
 sudo tincd -n rpinet -D --debug=5
 (crontab -l 2>/dev/null; echo "@reboot $(which tincd) -n rpinet -D --debug=5") | crontab -
+
+# Run nginx in docker with docker-compose
+sudo apt-get install -y docker-compose
+sudo chown $USER:docker /var/run/docker.sock
+wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
+wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
+DOMAIN=${DOMAIN} docker-compose up -d
