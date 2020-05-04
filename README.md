@@ -19,6 +19,7 @@ On your Raspberry Pi, to install and configure tinc as client on it, run
 ```
 wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/tinc/install-tinc-pi.sh | PI_NODE_NAME=pi2 PI_LAST_OCTET=3 sh -
 ```
+Make sure to pass in `PI_NODE_NAME` and `PI_LAST_OCTET`.
 
 On your laptop, to have the EC2 instance and the Raspberry Pi exchange their public keys, run
 ```
