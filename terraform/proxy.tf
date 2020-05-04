@@ -8,11 +8,22 @@ resource "aws_instance" "proxy" {
   subnet_id                   = aws_subnet.public_subnet_1.id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.proxy_key_pair.key_name
-  user_data                   = file("startup.sh")
+  user_data                   = data.template_file.init.rendered
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.proxy_sg.id]
   tags = {
     Name = "proxy"
+  }
+}
+
+data "template_file" "init" {
+  template = "${file("init.sh")}"
+
+  vars = {
+    DOMAIN = var.domain
+    EMAIL = var.email
+    CLOUDFLARE_API_KEY = var.cloudflare_api_key,
+    CLOUDFLARE_EMAIL = var.cloudflare_email
   }
 }
 

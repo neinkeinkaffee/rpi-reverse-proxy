@@ -7,6 +7,9 @@ sudo add-apt-repository -y universe
 sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install -y certbot python-certbot-nginx
+echo "dns_cloudflare_api_key = ${CLOUDFLARE_API_KEY}" >> ~/.secrets/certbot/cloudflare.ini
+echo "dns_cloudflare_email = ${CLOUDFLARE_EMAIL}" >> ~/.secrets/certbot/cloudflare.ini
+sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini --non-interactive --agree-tos --domains $DOMAIN --email $EMAIL
 
 # Install and configure tinc
 sudo apt-get install -y tinc
