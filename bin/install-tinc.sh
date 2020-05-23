@@ -8,10 +8,9 @@ printf "Subnet = 10.0.0.$PI_LAST_OCTET/32" | sudo tee /etc/tinc/rpinet/hosts/$PI
 printf '#!/bin/sh\nifconfig $INTERFACE '"10.0.0.$PI_LAST_OCTET netmask 255.255.255.0" | sudo tee /etc/tinc/rpinet/tinc-up
 printf '#!/bin/sh\nifconfig $INTERFACE down' | sudo tee /etc/tinc/rpinet/tinc-down
 sudo chmod 755 /etc/tinc/rpinet/tinc-*
-tincd -n rpinet -K4096
 sudo systemctl enable tinc@rpinet
 sudo systemctl start tinc@rpinet
-(crontab -l 2>/dev/null; echo "@reboot $(which systemctl) start tinc@rpinet") | crontab -
+sudo tincd -n rpinet -K4096
 
 # TODO 1: run aws configure with ACCESS_KEY and ACCESS_KEY_ID passed in as additional env vars
 # otherwise the script below cannot open the VPN ports by itself
