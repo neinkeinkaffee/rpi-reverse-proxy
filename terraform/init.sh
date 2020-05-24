@@ -26,4 +26,4 @@ echo -e '#!/bin/sh\nifconfig $INTERFACE 10.0.0.1 netmask 255.255.255.0' | sudo t
 echo -e '#!/bin/sh\nifconfig $INTERFACE down' | sudo tee /etc/tinc/rpinet/tinc-down
 sudo chmod 755 /etc/tinc/rpinet/tinc-*
 sudo tincd -n rpinet --debug=5
-(crontab -l 2>/dev/null; echo "@reboot $(which tincd) -n rpinet -D --debug=5") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot $(which tincd) -n rpinet --debug=4") | crontab -
