@@ -3,12 +3,12 @@
 set -ex
 
 # Prompt for node name and last octet in VPN IP if not provided
-if [ -z $HOST_NAME ]
+if [ -z $PI_NODE_NAME ]
 then
   read -p "Please specify hostname of Raspberry Pi (will be used as VPN node name): " HOST_NAME
 fi
 
-if [ -z $LAST_OCTET ]
+if [ -z $PI_LAST_OCTET ]
 then
   read -p "Please specify what should be used as last octet in the Raspberry Pi's VPN IP: " LAST_OCTET
 fi
@@ -20,9 +20,9 @@ fi
 
 # Install tinc on Raspberry Pi
 set +e
-export PI_NODE_NAME=$HOST_NAME PI_LAST_OCTET=$LAST_OCTET
+export PI_NODE_NAME=$PI_NODE_NAME PI_LAST_OCTET=$PI_LAST_OCTET
 ENV_VARS='$PI_NODE_NAME:$PI_LAST_OCTET'
-envsubst "$ENV_VARS" < $(pwd)/bin/install-tinc.sh | ssh pi@$HOST_NAME sh -
+envsubst "$ENV_VARS" < $(pwd)/bin/install-tinc.sh | ssh pi@$PI_NODE_NAME sh -
 set -e
 
 # Exchange keys between Raspberry Pi and the VPN server running on EC2

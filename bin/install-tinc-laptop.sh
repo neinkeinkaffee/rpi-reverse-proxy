@@ -27,4 +27,4 @@ sudo tincd -c /etc/tinc/rpinet --pidfile=/var/run/tincd.pid -n rpinet -K4096
 echo rpinet | sudo tee /etc/tinc/nets.boot
 cat /etc/tinc/rpinet/hosts/$LAPTOP_NODE_NAME | ssh ubuntu@$EC2_NODE_IP sudo tee /etc/tinc/rpinet/hosts/$LAPTOP_NODE_NAME
 ssh ubuntu@$EC2_NODE_IP cat /etc/tinc/rpinet/hosts/ec2 | sudo tee /etc/tinc/rpinet/hosts/ec2
-# sudo tincd -c /etc/tinc/rpinet --pidfile=/var/run/tincd.pid -n rpinet -D --debug=5
+# sudo tincd -c /etc/tinc/rpinet --pidfile=/var/run/tincd.pid -n rpinet --debug=5

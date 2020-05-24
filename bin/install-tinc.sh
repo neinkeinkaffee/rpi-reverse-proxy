@@ -12,8 +12,7 @@ sudo systemctl enable tinc@rpinet
 sudo systemctl start tinc@rpinet
 sudo tincd -n rpinet -K4096
 
-# TODO 1: run aws configure with ACCESS_KEY and ACCESS_KEY_ID passed in as additional env vars
-# otherwise the script below cannot open the VPN ports by itself
+# TODO: (echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY; echo eu-central-1; echo) | aws configure
 cat << 'EOF' > open-vpn-port.sh
 #!/usr/bin/env bash
 set -ex
