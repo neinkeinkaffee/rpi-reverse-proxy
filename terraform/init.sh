@@ -10,9 +10,9 @@ sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu
 
 # Run nginx in docker with docker-compose
 sudo apt-get install -y docker-compose
-sudo chown $USER:docker /var/run/docker.sock
-wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
-wget https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
+sudo chown ubuntu:docker /var/run/docker.sock
+wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
+wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
 DOMAIN=${DOMAIN} docker-compose up -d
 
 # Install and configure tinc
