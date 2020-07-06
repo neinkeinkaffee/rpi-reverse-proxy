@@ -13,7 +13,7 @@ sudo apt-get install -y docker-compose
 sudo chown ubuntu:docker /var/run/docker.sock
 wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
 wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
-DOMAIN=${DOMAIN} docker-compose up -d
+DOMAIN=${DOMAIN} AGENT1=${AGENT1} AGENT2=${AGENT2} docker-compose up -d
 
 # Install and configure tinc
 sudo apt-get install -y tinc

@@ -4,6 +4,43 @@ http {
   ssl_certificate     /etc/letsencrypt/live/$DOMAIN-0002/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/$DOMAIN-0002/privkey.pem;
 
+  upstream rpi-https {
+      server $AGENT1:443;
+      server $AGENT2:443;
+  }
+
+  upstream rpi-http {
+      server $AGENT1:80;
+      server $AGENT2:80;
+  }
+
+  server {
+    listen 80;
+    server_name *.$DOMAIN;
+
+    location / {
+      proxy_pass  http://rpi-http;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+  }
+
+  server {
+    listen 443 ssl;
+    server_name *.$DOMAIN;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains" always;
+
+    location / {
+      proxy_pass  https://rpi-https;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+  }
+
   server {
     listen 443 ssl;
     server_name test1.$DOMAIN;

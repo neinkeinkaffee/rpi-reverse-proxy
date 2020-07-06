@@ -23,6 +23,8 @@ data "template_file" "init" {
     DOMAIN = var.domain
     EMAIL = var.email
     CLOUDFLARE_API_TOKEN = var.cloudflare_api_token
+    AGENT1=var.agent1
+    AGENT22=var.agent2
   }
 }
 
