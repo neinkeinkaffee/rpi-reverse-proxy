@@ -24,7 +24,7 @@ data "template_file" "init" {
     EMAIL = var.email
     CLOUDFLARE_API_TOKEN = var.cloudflare_api_token
     AGENT1=var.agent1
-    AGENT22=var.agent2
+    AGENT2=var.agent2
   }
 }
 
