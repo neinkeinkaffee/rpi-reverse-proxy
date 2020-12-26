@@ -1,15 +1,17 @@
 events {}
 
 http {
-  ssl_certificate     /etc/letsencrypt/live/$DOMAIN-0002/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN-0002/privkey.pem;
+  ssl_certificate     /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
 
   upstream rpi-https {
+      server $AGENT0:443;
       server $AGENT1:443;
       server $AGENT2:443;
   }
 
   upstream rpi-http {
+      server $AGENT0:80;
       server $AGENT1:80;
       server $AGENT2:80;
   }
@@ -43,57 +45,12 @@ http {
 
   server {
     listen 443 ssl;
-    server_name test1.$DOMAIN;
+    server_name smoketest.$DOMAIN;
 
     add_header Strict-Transport-Security "max-age=31536000; includeSubdomains" always;
 
     location / {
       proxy_pass  http://localhost:8000;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-     }
-  }
-
-  server {
-    listen 443 ssl;
-    server_name test2.$DOMAIN;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains" always;
-
-    location / {
-      proxy_pass  http://localhost:8001;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-     }
-  }
-
-  server {
-    listen 443 ssl;
-    server_name raspberrypi01.$DOMAIN;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains" always;
-
-    location / {
-      proxy_pass  http://10.0.0.28:8000;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-     }
-  }
-
-  server {
-    listen 443 ssl;
-    server_name pi1.$DOMAIN;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains" always;
-
-    location / {
-      proxy_pass  http://10.0.0.35:8000;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header Host $http_host;
       proxy_set_header X-Forwarded-Proto https;

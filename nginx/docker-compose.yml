@@ -2,11 +2,14 @@ nginx:
   image: nginx
   environment:
     DOMAIN: $DOMAIN
+    AGENT0: $AGENT0
+    AGENT1: $AGENT1
+    AGENT2: $AGENT2
   volumes:
     - ./nginx.conf.template:/etc/nginx/nginx.conf.template
     - /etc/letsencrypt:/etc/letsencrypt
   ports:
     - "80:80"
     - "443:443"
-  entrypoint: sh -c "envsubst '$$DOMAIN' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+  entrypoint: export AGENT0=$AGENT0 AGENT1=$AGENT1 AGENT2=$AGENT2 && sh -c "envsubst '$$DOMAIN:$$AGENT0:$$AGENT1:$$AGENT2' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
   net: "host"
