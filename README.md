@@ -29,4 +29,4 @@ LAPTOP_NODE_NAME=laptop1 LAPTOP_LAST_OCTET=11 EC2_NODE_IP=123.123.123.123 ./bin/
 ```
 Make sure to provide `LAPTOP_NODE_NAME`, `LAPTOP_LAST_OCTET` and `EC2_NODE_IP`, the script will prompt you for values if it finds they're empty.
 
-If everything worked as expected you should now be able to ping the Raspberry Pi via its private VPN IP `10.0.0.x` from your laptop and vice versa.
+If everything worked as expected you should now be able to ping the Raspberry Pi via its private VPN IP `10.0.1.x` from your laptop and vice versa.

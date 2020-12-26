@@ -1,6 +1,7 @@
 .idea
 *.terraform
 *.tfstate*
+*.terraform.lock.hcl
 *.priv
 *.bak
 terraform/terraform.tfvars

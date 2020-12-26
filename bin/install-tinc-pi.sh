@@ -5,12 +5,12 @@ set -ex
 # Prompt for node name and last octet in VPN IP if not provided
 if [ -z $PI_NODE_NAME ]
 then
-  read -p "Please specify hostname of Raspberry Pi (will be used as VPN node name): " HOST_NAME
+  read -p "Please specify hostname of Raspberry Pi (will be used as VPN node name): " PI_NODE_NAME
 fi
 
 if [ -z $PI_LAST_OCTET ]
 then
-  read -p "Please specify what should be used as last octet in the Raspberry Pi's VPN IP: " LAST_OCTET
+  read -p "Please specify what should be used as last octet in the Raspberry Pi's VPN IP: " PI_LAST_OCTET
 fi
 
 if [ -z $EC2_NODE_IP ]
