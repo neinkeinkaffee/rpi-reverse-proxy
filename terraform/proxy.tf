@@ -3,8 +3,24 @@ resource "aws_key_pair" "proxy_key_pair" {
   public_key = file(var.keyfile)
 }
 
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
 resource "aws_instance" "proxy" {
-  ami                         = "ami-0257508f40836e6cf"
+  ami                         = data.aws_ami.ubuntu.id
   subnet_id                   = aws_subnet.public_subnet_1.id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.proxy_key_pair.key_name
@@ -17,12 +33,13 @@ resource "aws_instance" "proxy" {
 }
 
 data "template_file" "init" {
-  template = "${file("init.sh")}"
+  template = file("init.sh")
 
   vars = {
     DOMAIN = var.domain
     EMAIL = var.email
     CLOUDFLARE_API_TOKEN = var.cloudflare_api_token
+    AGENT0=var.agent0
     AGENT1=var.agent1
     AGENT2=var.agent2
   }
@@ -41,6 +58,20 @@ resource "aws_security_group" "proxy_sg" {
     from_port   = 8
     to_port     = 0
     protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 655
+    to_port     = 655
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 655
+    to_port     = 655
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
