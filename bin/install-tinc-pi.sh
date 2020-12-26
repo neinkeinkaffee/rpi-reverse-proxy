@@ -22,9 +22,8 @@ fi
 set +e
 export PI_NODE_NAME=$PI_NODE_NAME PI_LAST_OCTET=$PI_LAST_OCTET
 ENV_VARS='$PI_NODE_NAME:$PI_LAST_OCTET'
-envsubst "$ENV_VARS" < $(pwd)/bin/install-tinc.sh | ssh pi@$PI_NODE_NAME sh -
+envsubst "$ENV_VARS" < $(pwd)/bin/install-and-configure.sh | ssh pi@$PI_NODE_NAME sh -
 set -e
 
 # Exchange keys between Raspberry Pi and the VPN server running on EC2
-ssh pi@$PI_NODE_NAME cat /etc/tinc/rpinet/hosts/$PI_NODE_NAME | ssh ubuntu@$EC2_NODE_IP sudo tee /etc/tinc/rpinet/hosts/$PI_NODE_NAME
-ssh ubuntu@$EC2_NODE_IP cat /etc/tinc/rpinet/hosts/ec2 | ssh pi@$PI_NODE_NAME sudo tee /etc/tinc/rpinet/hosts/ec2
+PI_NODE_NAME=$PI_NODE_NAME EC2_NODE_IP=$EC2_NODE_IP $(pwd)/bin/exchange-keys.sh
