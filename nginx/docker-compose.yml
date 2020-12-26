@@ -11,5 +11,5 @@ nginx:
   ports:
     - "80:80"
     - "443:443"
-  entrypoint: export AGENT0=$AGENT0 AGENT1=$AGENT1 AGENT2=$AGENT2 && sh -c "envsubst '$$DOMAIN:$$AGENT0:$$AGENT1:$$AGENT2' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+  entrypoint: sh -c "export AGENT0=$AGENT0 AGENT1=$AGENT1 AGENT2=$AGENT2 && envsubst '$$DOMAIN:$$AGENT0:$$AGENT1:$$AGENT2' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
   net: "host"
