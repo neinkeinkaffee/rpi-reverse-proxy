@@ -23,10 +23,15 @@ CIDRS=$(aws ec2 describe-security-groups --region eu-central-1 --group-ids $SG \
 for ip in $CIDRS; do
 	[ "$MYIP/32" != "$ip" ] && aws ec2 revoke-security-group-ingress \
 	  --region eu-central-1 \
-		--group-id $SG --protocol tcp --port 22 --cidr $ip
+		--group-id $SG --protocol tcp --port 22 --cidr $ip >> /dev/null
 done
 
 # Allow access for IP of this machine
 [ -z $(echo "$CIDRS" | grep "$MYIP/32") ] && aws ec2 authorize-security-group-ingress \
 	  --region eu-central-1 \
-    --group-id $SG --protocol tcp --port 22 --cidr "$MYIP/32"
+    --group-id $SG --protocol tcp --port 22 --cidr "$MYIP/32" > /dev/null
+
+# Add the EC2 host key to .ssh/known_hosts
+ELASTIC_IP=$(aws ec2 describe-instances --region eu-central-1 --filter "Name=tag:Name,Values=proxy" --query "Reservations[].Instances[].PublicIpAddress" | jq -r '.[0]')
+sed -i '.bkp' '/^'"$ELASTIC_IP"'/d' ~/.ssh/known_hosts
+ssh-keyscan $ELASTIC_IP>> ~/.ssh/known_hosts
