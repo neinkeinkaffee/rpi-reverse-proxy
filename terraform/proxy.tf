@@ -49,6 +49,9 @@ resource "aws_eip" "proxy_eip" {
   instance   = aws_instance.proxy.id
   vpc        = true
   depends_on = [aws_internet_gateway.internet_gateway]
+  tags = {
+    Name = "proxy"
+  }
 }
 
 resource "aws_security_group" "proxy_sg" {
