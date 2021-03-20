@@ -3,9 +3,9 @@
 # Install packages
 sudo apt-get update > /dev/null
 sudo apt-get install -y docker-compose python3-pip tinc
-pip3 install --upgrade certbot-dns-cloudflare
 
 # Run certbot
+pip3 install --upgrade certbot-dns-cloudflare
 sudo mkdir -p /home/ubuntu/.secrets/certbot
 echo "dns_cloudflare_api_token = ${CLOUDFLARE_API_TOKEN}" >> /home/ubuntu/.secrets/certbot/cloudflare.ini
 sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu/.secrets/certbot/cloudflare.ini --non-interactive --agree-tos -d *.${DOMAIN} -m ${EMAIL}
@@ -32,3 +32,6 @@ sudo chmod 755 /etc/tinc/rpinet/tinc-*
 sudo tincd -n rpinet --debug=3
 sudo systemctl enable tinc@rpinet
 sudo systemctl start tinc@rpinet
+
+# Store kubeconfig
+echo $PIKUBECONFIG | base64 -d > /home/ubuntu/.kube/config
