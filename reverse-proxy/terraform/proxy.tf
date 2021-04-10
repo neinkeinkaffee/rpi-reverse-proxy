@@ -43,6 +43,11 @@ data "template_file" "init" {
     AGENT1=var.agent1
     AGENT2=var.agent2
     PIKUBECONFIG=var.pikubeconfig
+    EC2_PUBLIC_KEY=var.ec2_public_key
+    EC2_PRIVATE_KEY=var.ec2_private_key
+    AGENT0_PUBLIC_KEY=var.agent0_public_key
+    AGENT1_PUBLIC_KEY=var.agent1_public_key
+    AGENT2_PUBLIC_KEY=var.agent2_public_key
   }
 }
 
