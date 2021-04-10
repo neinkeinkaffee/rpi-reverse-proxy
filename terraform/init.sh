@@ -8,7 +8,7 @@ sudo apt-get install -y docker-compose python3-pip tinc
 pip3 install --upgrade certbot-dns-cloudflare
 sudo mkdir -p /home/ubuntu/.secrets/certbot
 echo "dns_cloudflare_api_token = ${CLOUDFLARE_API_TOKEN}" >> /home/ubuntu/.secrets/certbot/cloudflare.ini
-sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu/.secrets/certbot/cloudflare.ini --non-interactive --agree-tos -d *.${DOMAIN} -m ${EMAIL}
+#sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu/.secrets/certbot/cloudflare.ini --non-interactive --agree-tos -d *.${DOMAIN} -m ${EMAIL}
 
 # Run nginx
 sudo chown ubuntu:docker /var/run/docker.sock

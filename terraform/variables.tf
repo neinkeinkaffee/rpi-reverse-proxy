@@ -1,3 +1,4 @@
+variable "region" {}
 variable "keyfile" {}
 variable "domain" {}
 variable "email" {}

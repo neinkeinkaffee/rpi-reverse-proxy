@@ -8,7 +8,7 @@ resource "aws_vpc" "vpc" {
 
 resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.vpc.id
-  availability_zone = "eu-central-1a"
+  availability_zone = "${var.region}a"
   cidr_block        = "10.0.1.0/26"
   tags = {
     Name = "subnet-public-1"
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet_1" {
 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id            = aws_vpc.vpc.id
-  availability_zone = "eu-central-1b"
+  availability_zone = "${var.region}b"
   cidr_block        = "10.0.1.64/26"
   tags = {
     Name = "subnet-public-2"
