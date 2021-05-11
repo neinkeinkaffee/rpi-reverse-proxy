@@ -4,4 +4,4 @@
 *.terraform.lock.hcl
 *.priv
 *.bak
-terraform/terraform.tfvars
+reverse-proxy/terraform/terraform.tfvars
