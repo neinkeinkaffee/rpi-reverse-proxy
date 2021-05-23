@@ -14,8 +14,8 @@ sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/ubuntu
 
 # Run nginx
 sudo chown ubuntu:docker /var/run/docker.sock
-wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/docker-compose.yml
-wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/nginx/nginx.conf.template
+wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/reverse-proxy/nginx/docker-compose.yml
+wget -P /home/ubuntu https://raw.githubusercontent.com/neinkeinkaffee/rpi-reverse-proxy/master/reverse-proxy/nginx/nginx.conf.template
 while (! docker stats --no-stream ); do
   echo "Waiting for Docker to launch..."
   sleep 1
