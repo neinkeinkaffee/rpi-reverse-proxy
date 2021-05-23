@@ -58,3 +58,17 @@ http {
      }
   }
 }
+
+stream {
+    upstream kubernetes {
+        server $AGENT0:6443;
+        server $AGENT1:6443;
+        server $AGENT2:6443;
+    }
+
+    server {
+        listen 6443;
+        listen 443;
+        proxy_pass kubernetes;
+    }
+}

@@ -42,7 +42,6 @@ data "template_file" "init" {
     AGENT0=var.agent0
     AGENT1=var.agent1
     AGENT2=var.agent2
-    PIKUBECONFIG=var.pikubeconfig
     EC2_PUBLIC_KEY=var.ec2_public_key
     EC2_PRIVATE_KEY=var.ec2_private_key
     AGENT0_PUBLIC_KEY=var.agent0_public_key
@@ -94,6 +93,13 @@ resource "aws_security_group" "proxy_sg" {
   ingress {
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 6443
+    to_port     = 6443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
