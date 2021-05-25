@@ -19,7 +19,7 @@ terraform apply -var-file=terraform.tfvars
 
 On your laptop, to install and configure tinc as client on it, and have the EC2 instance and the Raspberry Pi exchange their public keys, run 
 ```
-PI_NODE_NAME=kleener-punker PI_LAST_OCTET=12 EC2_NODE_IP=123.123.123.123 ./bin/install-tinc-pi.sh
+PI_NODE_NAME=pi0 PI_LAST_OCTET=12 EC2_NODE_IP=123.123.123.123 ./bin/install-tinc-pi.sh
 ```
 Make sure to provide `PI_NODE_NAME`, `PI_LAST_OCTET` and `EC2_NODE_IP`, the script will prompt you for values if it finds they're empty.
 

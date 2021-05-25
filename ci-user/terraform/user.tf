@@ -14,23 +14,16 @@ resource "aws_iam_user_policy" "lb_ro" {
 {
   "Version": "2012-10-17",
   "Statement": [
-      {
-          "Effect": "Allow",
-          "Action": [
-              "ec2:AuthorizeSecurityGroupIngress",
-              "ec2:RevokeSecurityGroupIngress"
-          ],
-          "Resource": "arn:aws:ec2:*:*:security-group/proxy_sg"
-      },
-      {
-          "Action": [
-              "ec2:DescribeSecurityGroups",
-              "ec2:DescribeSecurityGroupReferences",
-              "ec2:DescribeVpcs"
-          ],
-          "Effect": "Allow",
-          "Resource": "*"
-      }
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::tfstate-512334169695"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": "arn:aws:s3:::tfstate-512334169695/*"
+    }
   ]
 }
 EOF

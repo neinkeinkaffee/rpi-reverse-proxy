@@ -5,3 +5,5 @@
 *.priv
 *.bak
 reverse-proxy/terraform/terraform.tfvars
+ci-user/terraform/terraform.tfvars
+state-bucket/terraform/terraform.tfvars
